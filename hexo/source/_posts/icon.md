@@ -1,0 +1,443 @@
+---
+title: 网站icon图标
+layout: post
+comments: true
+tag: css3 node
+category: 前端
+---
+## 网站icon图标  ##
+之前在学习webpack打包的时候，发现可以将网站ICON图标转化为Base64编码规范的文本字符，然后引入当做背景图片，以前只知道CSS Sprites这种方法来减少网页请求。后来上网了解了一下，原来现在对网站icon已经有了很多优化方法，如：
+
+- CSS Sprites
+- 字体图标(Icon Font)
+- DataURI
+- SVG Sprites
+
+<!-- more -->
+其核心依然是减少HTPP请求数。
+
+### CSS Sprites(雪碧图) ###
+现在大部分网站还是使用这种方法优化网站icon，使用方法也非常简单，网上工具很多。这里列举下这种方式的优缺点，不详细说明。
+优势：
+
+- 减少HTTP请求数
+- 可以是任意图形，也可以是任意色彩
+- 兼容性极好
+
+劣势：
+
+- 增加开发时间，增加维护成本，当做好一张图后，想修改是非常麻烦的。
+- 图片尺寸固定
+
+### 字体图标(Icon Font) ###
+为了解决屏幕分辨率对图标影响的问题，字体图标(Icon Font)就顺势而生了。字体图标是一种全新的设计方式，更为重要的是相比位图而言，使用字体图标可以不受限于屏幕分辨率，冲着这一点就具有非常强的优势，而且字体图标还具有一个优势是，只要适合字体相关的CSS属性都适合字体图标，比如说使用font-size修改图标大小、使用color修改图标颜色、使用text-shadow给图标增加阴影等等。
+基于这些原因，这种方式用的越来越多。
+优势：
+
+- 减少HTTP请求数
+- 很容易任意地缩放、改变颜色、产生阴影、可以拥有透明效果、等CSS的支持。
+- 体积小
+
+劣势：
+
+- 它们只能被渲染成单色或CSS3的渐变色
+- 使用限制性很大，除非你想花时间去创作你自己的字体图标，
+- 字体文件体积过大，直接影响页面加载性能，特别是加载一个包含数百图标的Fonts，却只使用其中几个图标
+- 在不同的设备浏览器字体的渲染会略有差别，在不同的浏览器或系统中对文字的渲染不同，其显示的位置和大小可能会受到font-size、line-height、word-spacing等CSS属性的影响，而且这种影响调整起来较为困难
+- 为了实现最大程度的浏览器支持，可能要提供至少四种不同类型的字体文件。包括.ttf、.woff、.eot和.svg格式字体
+- 不兼容旧的手机浏览器：Opera mini，Android 2.1，Windows Phone 7.5-7.8
+- 在手机上可能与系统字体冲突
+
+下面来尝试用这种方法来制作网站ICON。一般字体库都是在网上找现成的用。如[阿里的图标库](http://www.iconfont.cn)，还有国外的[icomoon.io](https://icomoon.io/app/#/select)。
+#### 1.从网上下载字体库 ####
+打开[icomoon.io](https://icomoon.io/app/#/select)。然后如图
+![](http://ni484sha.com/images/icon1.png)
+接着
+![](http://ni484sha.com/images/icon2.png)
+![](http://ni484sha.com/images/icon3.png)
+#### 2.下载解压后得到以下文件 ####
+![](http://ni484sha.com/images/icon4.png)
+![](http://ni484sha.com/images/icon5.png)  
+
+#### 3.然后我们新建一个HTML文件 ####
+要引入下载的style.css
+
+```html
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>font-icon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <!--[if lt IE 8]><!-->
+    <link rel="stylesheet" href="ie7/ie7.css">
+    <!--<![endif]-->
+</head>
+<body>
+    <div class="clearfix mhl ptl">
+            <div class="clearfix bshadow0 pbs">
+                <span class="icon icon-home">          
+                </span>
+                <span class="icon">&#xe900;         
+                </span>                 
+            </div>
+            <div class="clearfix bshadow0 pbs">
+                <span class="icon icon-office">              
+                </span>
+                <span class="icon">&#xe903;         
+                </span>   
+            </div>     
+            <div class="clearfix bshadow0 pbs">
+                <span class="icon icon-newspaper">  
+                </span>
+                <span class="icon">&#xe904;         
+                </span>                                
+            </div>    
+            <div class="clearfix bshadow0 pbs">
+                <span class="icon icon-pencil">     
+                </span>
+                <span class="icon">&#xe905;         
+                </span>                   
+            </div>
+  </div>
+</body>
+</html>
+
+```
+#### 4.style.css如下 ####
+```css
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?ri2p4y');
+  src:  url('fonts/icomoon.eot?ri2p4y#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?ri2p4y') format('truetype'),
+    url('fonts/icomoon.woff?ri2p4y') format('woff'),
+    url('fonts/icomoon.svg?ri2p4y#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 为演示添加 =========== */
+  font-size: 40px;
+}
+
+.icon-home:before {
+  content: "\e900";//加入字体编号
+  font-size: 50px;//修改字体大小
+}
+.icon-office:before {
+  content: "\e903";
+  color: #564813;//修改字体颜色
+}
+.icon-newspaper:before {
+  content: "\e904";
+  font-size: 20px;
+}
+.icon-pencil:before {
+  content: "\e905";
+  color: #444444;
+}
+
+```
+以上用了两种方式来引用字体文件，一种是通过Html直接写字体编号，另一种通过CSS伪类添加内容。相应的字体编号在下载下来的demo.html中可以查看。
+![](http://ni484sha.com/images/icon6.png)  
+而最终效果如下图，可以在CSS中对相应的字体修改其样式，缩放、改变颜色、产生阴影、可以拥有透明效果、等CSS样式都可以  
+![](http://ni484sha.com/images/icon7.png)  
+
+### SVG Sprites(雪碧图) ###
+
+SVG Sprites原理跟CSS Sprites一样，把多个SVG 图标放到一张SVG中，然后通过坐标或者ID获取其中的图标。Icon Font功能的网站[icomoon.io](https://icomoon.io/app/#/select)已经提供输出 SVG Sprites 功能了。
+#### 1.照例从网上下载SVG Sprites ####
+跟font一样下载SVG
+![](http://ni484sha.com/images/icon8.png)
+![](http://ni484sha.com/images/icon9.png)
+点击设置，选中CSS SPRITE
+![](http://ni484sha.com/images/icon10.png)
+
+#### 2.下载解压后目录如下 ####
+这也提供了两种方式使用SVG icon,其中sprite文件夹中的跟CSS sprite一样，通过CSS坐标来取不同的SVG图标. 
+![](http://ni484sha.com/images/icon11.png)
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="752" height="32" viewBox="0 0 752 32">
+<svg id="icon-home" width="32" height="32" viewBox="0 0 32 32" x="0" y="0">
+<path d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"></path>
+</svg>
+<svg id="icon-office" width="32" height="32" viewBox="0 0 32 32" x="48" y="0">
+<path d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
+</svg>
+<svg id="icon-newspaper" width="32" height="32" viewBox="0 0 32 32" x="96" y="0">
+<path d="M28 8v-4h-28v22c0 1.105 0.895 2 2 2h27c1.657 0 3-1.343 3-3v-17h-4zM26 26h-24v-20h24v20zM4 10h20v2h-20zM16 14h8v2h-8zM16 18h8v2h-8zM16 22h6v2h-6zM4 14h10v10h-10z"></path>
+</svg>
+<svg id="icon-pencil" width="32" height="32" viewBox="0 0 32 32" x="144" y="0">
+<path d="M27 0c2.761 0 5 2.239 5 5 0 1.126-0.372 2.164-1 3l-2 2-7-7 2-2c0.836-0.628 1.874-1 3-1zM2 23l-2 9 9-2 18.5-18.5-7-7-18.5 18.5zM22.362 11.362l-14 14-1.724-1.724 14-14 1.724 1.724z"></path>
+</svg>
+</svg>
+```
+这是将四个图标合并一起的sprite.svg文件，CSS首先根据class="icon"引入svg背景，用background-position并根据x跟y值区分每个图标。下面是sprite.css文件以及HTML。
+```html
+<!doctype html>
+<html>
+<head>
+    <title>CSS Sprite</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="sprite.css" rel="stylesheet">
+</head>
+<body>
+    <div class="clearfix mhl">
+        <div class="cell fs1">
+            <span class="icon icon-home"></span>
+            icon-home
+        </div>
+        <div class="cell fs1">
+            <span class="icon icon-office"></span>
+            icon-office
+        </div>
+        <div class="cell fs1">
+            <span class="icon icon-newspaper"></span>
+            icon-newspaper
+        </div>
+        <div class="cell fs1">
+            <span class="icon icon-pencil"></span>
+            icon-pencil
+        </div>
+  </div>
+</body>
+</html>
+```
+
+```css
+.icon {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url(sprite.svg);
+}
+.icon-home {
+  width: 32px;
+  height: 32px;
+  background-position: 0 0;
+}
+.icon-office {
+  width: 32px;
+  height: 32px;
+  background-position: -48px 0;
+}
+.icon-newspaper {
+  width: 32px;
+  height: 32px;
+  background-position: -96px 0;
+}
+.icon-pencil {
+  width: 32px;
+  height: 32px;
+  background-position: -144px 0;
+}
+```
+#### 3.SVG Sprite与symbol元素 ####
+目前，SVG Sprite最佳实践是使用symbol元素。symbol元素是什么呢？单纯翻译的话，是“符号”的意思。然，这个释义并不符合这里的场景。用组件解释比较合适。SVG就是由许多个symbol组合起来的。下面就是从下载的demo中的svg，由四个symbol组合而成：
+```xml
+<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+    <symbol id="icon-home" viewBox="0 0 32 32">
+        <title>home</title>
+        <path class="path1" d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"></path>
+    </symbol>
+    <symbol id="icon-office" viewBox="0 0 32 32">
+        <title>office</title>
+        <path class="path1" d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
+    </symbol>
+    <symbol id="icon-newspaper" viewBox="0 0 32 32">
+        <title>newspaper</title>
+        <path class="path1" d="M28 8v-4h-28v22c0 1.105 0.895 2 2 2h27c1.657 0 3-1.343 3-3v-17h-4zM26 26h-24v-20h24v20zM4 10h20v2h-20zM16 14h8v2h-8zM16 18h8v2h-8zM16 22h6v2h-6zM4 14h10v10h-10z"></path>
+    </symbol>
+    <symbol id="icon-pencil" viewBox="0 0 32 32">
+        <title>pencil</title>
+        <path class="path1" d="M27 0c2.761 0 5 2.239 5 5 0 1.126-0.372 2.164-1 3l-2 2-7-7 2-2c0.836-0.628 1.874-1 3-1zM2 23l-2 9 9-2 18.5-18.5-7-7-18.5 18.5zM22.362 11.362l-14 14-1.724-1.724 14-14 1.724 1.724z"></path>
+    </symbol>
+</defs>
+</svg>
+```
+每一个symbol就是一个图标元件，但是，只有上面的代码，是无法呈现图标效果的,必须要配合use,也就是SVG中的<use>元素。
+```html
+ <!doctype html>
+<html>
+<head>
+    <title>IcoMoon - SVG Icons</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+    <symbol id="icon-home" viewBox="0 0 32 32">
+        <title>home</title>
+        <path class="path1" d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"></path>
+    </symbol>
+    <symbol id="icon-office" viewBox="0 0 32 32">
+        <title>office</title>
+        <path class="path1" d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
+    </symbol>
+    <symbol id="icon-newspaper" viewBox="0 0 32 32">
+        <title>newspaper</title>
+        <path class="path1" d="M28 8v-4h-28v22c0 1.105 0.895 2 2 2h27c1.657 0 3-1.343 3-3v-17h-4zM26 26h-24v-20h24v20zM4 10h20v2h-20zM16 14h8v2h-8zM16 18h8v2h-8zM16 22h6v2h-6zM4 14h10v10h-10z"></path>
+    </symbol>
+    <symbol id="icon-pencil" viewBox="0 0 32 32">
+        <title>pencil</title>
+        <path class="path1" d="M27 0c2.761 0 5 2.239 5 5 0 1.126-0.372 2.164-1 3l-2 2-7-7 2-2c0.836-0.628 1.874-1 3-1zM2 23l-2 9 9-2 18.5-18.5-7-7-18.5 18.5zM22.362 11.362l-14 14-1.724-1.724 14-14 1.724 1.724z"></path>
+    </symbol>
+</defs>
+</svg>
+
+<header class="bgc1 clearfix">
+</header>
+    <div class="clearfix mhl ptl">
+        <div class="glyph fs1">
+            <div class="clearfix pbs">
+                <svg class="icon icon-home"><use xlink:href="#icon-home"></use></svg><span class="mls"> icon-home</span>
+            </div>
+        </div>
+        <div class="glyph fs1">
+            <div class="clearfix pbs">
+                <svg class="icon icon-office"><use xlink:href="#icon-office"></use></svg><span class="mls"> icon-office</span>
+            </div>
+        </div>
+        <div class="glyph fs1">
+            <div class="clearfix pbs">
+                <svg class="icon icon-newspaper"><use xlink:href="#icon-newspaper"></use></svg><span class="mls"> icon-newspaper</span>
+            </div>
+        </div>
+        <div class="glyph fs1">
+            <div class="clearfix pbs">
+                <svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg><span class="mls"> icon-pencil</span>
+            </div>
+        </div>
+  </div>
+<script defer src="svgxuse.js"></script>
+</body>
+</html>
+```
+上面就是一个页面中用symbol方式使用图标的代码。效果如下图
+![](http://ni484sha.com/images/icon12.png)  
+SVG也可以独立出来，use的href把路径带上就可以了。
+#### 4.多个SVG合成SVG SPRITES ####
+如果设计师自己设计并生成了单个SVG图标，合并的方法有两种：
+##### icoMoon网站上传后一起导出 #####
+如图所示，接下来操作跟之前的一样，选中图标后导出就行了。
+![](http://ni484sha.com/images/icon13.png)  
+##### grunt-svgstore合并 #####
+利用grunt-svgstore插件合成，有前端经验的都应该知道，grunt我也没用过，想了解的可以上网去查查，grunt是基于node的，所以要先安装node。这块我就不多说了。
+###### 1.安装相关资源 ######
+```xml
+npm install -g grunt-cli
+```
+首先全局安装CLI，这条命令将会把grunt命令植入系统路径，这样就能在任意目录运行他。
+```xml
+npm install grunt-svgstore --save-dev
+```
+###### 2.package.json ######
+新建一个文件夹放项目，然后安装grunt-svgstore插件。安装好后node_modules中就有grunt-svgstore相关包了。然后新建package.json文件。
+```json
+{
+  "name": "svg-store",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-svgstore": "~0.5.0"
+  }
+}
+```
+然后install依赖。
+```xml
+npm install 
+```
+###### 3.Gruntfile.js ######
+新建配置文件Gruntfile.js
+```javascript
+module.exports = function(grunt) {
+    // 配置
+    grunt.initConfig({
+        svgstore: {
+            options: {
+              prefix : 'icon-', 
+              svg: { 
+                viewBox : '0 0 100 100',
+                xmlns: 'http://www.w3.org/2000/svg'
+              },
+              includedemo:true,
+            },
+            default : {
+              files: {
+                'dest/dest-svg.svg': ['src/*.svg'],
+              },
+            }
+
+        }
+    });
+    // 载入grunt-svgstore
+    grunt.loadNpmTasks('grunt-svgstore');
+    // 注册任务
+    grunt.registerTask('default', ['svgstore']);
+};
+```
+###### 4.新建src文件夹 ######
+新建src文件夹，把所有的svg文件放进去。然后运行
+```xml
+grunt
+```
+在项目目录中就会出现dest-svg.svg跟dest-svg-demo.html，dest-svg.svg就是合并后的svg文件。[这里](https://github.com/lj360560179/grunt-svgstore-test) 是这个简单项目的地址。
+### DataURI ###
+DataURI是利用Base64编码规范将图片转换成文本字符，不仅是图片，还可以编码JS、CSS、HTML等文件。通过将图标文件编码成文本字符，从而可以直接写在HTML/CSS文件里面，不会增加任何多余的请求。  但是DataURI的劣势也是很明显的，每次都需要解码从而阻塞了CSS渲染，可以通过分离出一个专用的CSS文件，不过那就需要增加一个请求，那样与CSS Sprites、Icon Font和SVG相比没有了任何优势，也因此，在实践中不推荐这种方法。需要注意的是通过缓存CSS可以来达到缓存的目的。  
+优势：
+
+- 不增加请求数
+
+劣势：
+
+- 图片不能太大
+- 每次加载页面都需要解码
+- 不支持IE6/7，IE8最大支持32KB
+- 难于维护
+
+用法很简单，将base64填入即可。
+```css
+.icon{ 
+  background: url(data:text/svg+xml;base64,<base64 encoded data>)
+}
+```
+
+## 如何选择 ##
+
+- 如果你需要信息更丰富的图片，不仅仅是图标时，可以考虑使用<img>
+- 使用的不是展示类图形，而是装饰性的图形（包括图标），而且这部分图形一般不轻意改变，可以考虑使用PNG Sprites
+- 如果你的图标之类需要更好的适配于高分辨率设备环境之下，可以考虑使用SVG Sprites
+- 如果仅仅是要使用Icon这些小图标，并且对Icon做一些个性化样式，可以考虑使用Icon Font
+- 如果你需要图标更具扩展性，又不希望加载额外的图标，可以考虑在页面中直接使用SVG代码绘制的矢量图  
+
+当然配合起来用也是可以的。
+ 
+## 最后 ##
+这是我参考了网上很多大神的博客写的，一下写了那么长，有错的地方大家见谅。  
+## 参考链接 ## 
+[【grunt整合版】30分钟学会使用grunt打包前端代码](http://www.cnblogs.com/yexiaochai/p/3603389.html)  
+[Web中的图标](http://www.w3cplus.com/css/web-icons.html)   
+[未来必热：SVG Sprite技术介绍](http://www.zhangxinxu.com/wordpress/2014/07/introduce-svg-sprite-technology/)   
+[Web 设计新趋势: 使用 SVG 代替 Web Icon Font](https://io-meter.com/2014/07/20/replace-icon-fonts-with-svg/)   
+[慕课网视频教程：用字体在网页中画ICON图标](用字体在网页中画ICON图标) 
