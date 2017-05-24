@@ -1,5 +1,5 @@
 ---
-title: node学习
+title: vue cli 
 layout: post
 comments: true
 tag: 

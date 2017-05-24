@@ -39,3 +39,6 @@ git push -u origin master
 ```
 执行完后，如果没有异常，等待执行完就上传成功了，中间可能会让你输入Username和Password，你只要输入github的账号和密码就行了
 
+
+[Git常用命令速查手册](http://www.jianshu.com/p/5ee9897b6b65?utm_source=desktop&utm_medium=timeline)
+
