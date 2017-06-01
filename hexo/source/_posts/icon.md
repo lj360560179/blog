@@ -4,6 +4,7 @@ layout: post
 comments: true
 tag: css3 node
 category: 前端
+date: 2016.5.25 12:34:14 
 ---
 ## 网站icon图标  ##
 之前在学习webpack打包的时候，发现可以将网站ICON图标转化为Base64编码规范的文本字符，然后引入当做背景图片，以前只知道CSS Sprites这种方法来减少网页请求。后来上网了解了一下，原来现在对网站icon已经有了很多优化方法，如：

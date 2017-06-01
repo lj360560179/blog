@@ -7,6 +7,7 @@ tag:
 - Spring Boot
 - Spring-data-jpa
 category: java
+date: 2016.7.25 15:44:14
 ---
 ### Spring Boot + Spring-data-jpa
 这两个框架都没用过，平时上网查资料听的也比较多，有时间就自己整合一下，关于Spring Boot，[这里](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples)有很多跟其他框架整合的例子。

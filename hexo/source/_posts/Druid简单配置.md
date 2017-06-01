@@ -6,6 +6,7 @@ tag:
 - java
 - 数据库 
 category: java
+date: 2016.8.19 12:34:14 
 ---
 ### Druid简单配置
 这里只是最简单的配置，更多详细的配置可以去[druid](https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)查看。

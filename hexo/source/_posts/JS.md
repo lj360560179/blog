@@ -5,6 +5,7 @@ comments: true
 tag: 
 - javascript
 category: javascript
+date: 2016.9.11 15:44:14 
 ---
 ## 2016-9-11.JS ##
 ### 1.typeof ###

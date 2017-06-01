@@ -6,6 +6,7 @@ tag:
 - java
 - quartz 
 category: java
+date: 2016.6.25 15:44:14
 ---
 ### quartz 使用spring @Scheduled注解执行定时任务 
 ##### 1.maven依赖
