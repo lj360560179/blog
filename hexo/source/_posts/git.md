@@ -33,6 +33,7 @@ git remote add origin https://github.com/lj360560179/xxRepository
 ### 6.上传github之前，要先pull一下，执行如下命令：
 ```sh
 git pull origin master
+git pull origin master ----allow-unrelated-histories
 ```
 ### 7.也就是最后一步，上传代码到github远程仓库
 ```sh
