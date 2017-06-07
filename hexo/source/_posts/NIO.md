@@ -17,15 +17,14 @@ NIO是New I/O的简称，与旧式的基于流的I/O方法相对，从名字看�
 * 支持锁和内存映射文件的文件访问接口
 * 提供了基于Selector的异步网络I/O
 <!-- more -->
-### Buffer && Channel
+
+### Buffer and Channel
 ```java
 FileInputStream fin = new FileInputStream(new File("d:\\temp_buffer.tmp"));
 FileChannel fc=fin.getChannel();
 
-
 ByteBuffer byteBuffer=ByteBuffer.allocate(1024);
 fc.read(byteBuffer);
-
 
 fc.close();
 byteBuffer.flip();
@@ -69,16 +68,16 @@ public class NioAndAio {
 ```java
 public final Buffer rewind()
 ``` 
-* 将position置零，并清除标志位（mark）
+ 将position置零，并清除标志位（mark）
 ```java
  public final Buffer clear()
 ``` 
 
-* 将position置零，同时将limit设置为capacity的大小，并清除了标志mark
+ 将position置零，同时将limit设置为capacity的大小，并清除了标志mark
 ```java
  public final Buffer flip()
 ``` 
-* 先将limit设置到position所在位置，然后将position置零，并清除标志位mark
+ 先将limit设置到position所在位置，然后将position置零，并清除标志位mark
 通常在读写转换时使用
 
 
