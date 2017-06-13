@@ -4,6 +4,7 @@ comments: true
 title: JVM机制运行原理
 tag: 
 - java
+- jvm
 category: java
 date: 2017.6.11 00:34:14 
 ---
