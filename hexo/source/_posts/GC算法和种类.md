@@ -5,6 +5,7 @@ title: GC算法与种类
 tag: 
 - java
 - jvm
+- GC
 category: java
 date: 2017.6.13 00:34:14 
 ---
