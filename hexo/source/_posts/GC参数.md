@@ -52,12 +52,10 @@ date: 2017.6.14 00:34:14
 * -XX:MaxGCPauseMills
  * 最大停顿时间，单位毫秒  
  * GC尽力保证回收时间不超过设定值
-
 * -XX:GCTimeRatio
  * 0-100的取值范围
  * 垃圾收集时间占总时间的比
  * 默认99，即最大允许1%时间做GC
-
 * 这两个参数是矛盾的。因为停顿时间和吞吐量不可能同时调优
 
 
@@ -70,7 +68,6 @@ date: 2017.6.14 00:34:14
  * 并发阶段会降低吞吐量  
  * 老年代收集器（新生代使用ParNew）  
  * XX:+UseConcMarkSweepGC
-
 * CMS运行过程比较复杂，着重实现了标记的过程，可分为
  * 初始标记
    * 根可以直接关联到的对象
@@ -120,10 +117,8 @@ date: 2017.6.14 00:34:14
 
 * -XX:+ UseCMSCompactAtFullCollection Full GC后，进行一次整理
  * 整理过程是独占的，会引起停顿时间变长
-
 * -XX:+CMSFullGCsBeforeCompaction 
  * 设置进行几次Full GC后，进行一次碎片整理
-
 * -XX:ParallelCMSThreads
  * 设定CMS的线程数量
 
