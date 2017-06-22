@@ -32,16 +32,34 @@ date: 2017.6.14 00:34:14
 
 8.259: [Full GC 8.259: [Tenured: 43711K->40302K(43712K), 0.2960477 secs] 63350K->40302K(63360K), [Perm : 17836K->17836K(32768K)], 0.2961554 secs] [Times: user=0.28 sys=0.02, real=0.30 secs]
 ```
+
 #### GC参数 -并行收集器
+* ParNew收集器
+  - -XX:+UseParNewGC
+    * 新生代并行
+    * 老年代串行
+  - Serial收集器新生代的并行版本
+  - 复制算法
+  - 多线程，需要多核支持
+  - -XX:ParallelGCThreads 限制线程数量
+
+多线程不一定快哦！
+
+![](http://ni484sha.com/images/gcc99.png)
+
+```s
+0.834: [GC 0.834: [ParNew: 13184K->1600K(14784K), 0.0092203 secs] 13184K->1921K(63936K), 0.0093401 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
+```
+
 * Parallel收集器
  * 类似ParNew  
  * 新生代复制算法  
  * 老年代 标记-压缩  
  * 更加关注吞吐量  
  * XX:+UseParallelGC  
-  * 使用Parallel收集器+ 老年代串行  
+   - 使用Parallel收集器+ 老年代串行  
  * XX:+UseParallelOldGC
-  * 使用Parallel收集器+ 并行老年代
+   - 使用Parallel收集器+ 并行老年代
 
 ![](http://ni484sha.com/images/gcc3.png)
 
@@ -62,22 +80,22 @@ date: 2017.6.14 00:34:14
 ####  CMS收集器
 
 * CMS收集器
- * Concurrent Mark Sweep 并发标(与用户线程一起执行)记清除  
- * 标记-清除算法  
- * 与标记-压缩相比  
- * 并发阶段会降低吞吐量  
- * 老年代收集器（新生代使用ParNew）  
- * XX:+UseConcMarkSweepGC
+ - Concurrent Mark Sweep 并发标(与用户线程一起执行)记清除  
+ - 标记-清除算法  
+ - 与标记-压缩相比  
+ - 并发阶段会降低吞吐量  
+ - 老年代收集器（新生代使用ParNew）  
+ - XX:+UseConcMarkSweepGC
 * CMS运行过程比较复杂，着重实现了标记的过程，可分为
- * 初始标记
+ - 初始标记
    * 根可以直接关联到的对象
    * 速度快
- * 并发标记（和用户线程一起）
- * 主要标记过程，标记全部对象
- * 重新标记
+ - 并发标记（和用户线程一起）
+ - 主要标记过程，标记全部对象
+ - 重新标记
    * 由于并发标记时，用户线程依然运行，因此在正式清理前，再做修正
- * 并发清除（和用户线程一起）  
- * 基于标记结果，直接清理对象
+ - 并发清除（和用户线程一起）  
+ - 基于标记结果，直接清理对象
 
 ![](http://ni484sha.com/images/gcc4.png)
 
@@ -95,12 +113,12 @@ date: 2017.6.14 00:34:14
 ```
 
 * 特点
- * 尽可能降低停顿
- * 会影响系统整体吞吐量和性能
+ - 尽可能降低停顿
+ - 会影响系统整体吞吐量和性能
    * 比如，在用户线程运行过程中，分一半CPU去做GC，系统性能在GC阶段，反应速度就下降一半
- * 清理不彻底
+ - 清理不彻底
    * 因为在清理阶段，用户线程还在运行，会产生新的垃圾，无法清理
- * 因为和用户线程一起运行，不能在空间快满时再清理
+ - 因为和用户线程一起运行，不能在空间快满时再清理
    * -XX:CMSInitiatingOccupancyFraction设置触发GC的阈值
    * 如果不幸内存预留空间不够，就会引起concurrent mode failure
 
@@ -111,16 +129,16 @@ date: 2017.6.14 00:34:14
 使用串行收集器作为后备
 
 * 有关碎片
- * 标记-清除和标记-压缩
+ - 标记-清除和标记-压缩
 
 ![](http://ni484sha.com/images/gcc5.png)
 
 * -XX:+ UseCMSCompactAtFullCollection Full GC后，进行一次整理
- * 整理过程是独占的，会引起停顿时间变长
+ - 整理过程是独占的，会引起停顿时间变长
 * -XX:+CMSFullGCsBeforeCompaction 
- * 设置进行几次Full GC后，进行一次碎片整理
+ - 设置进行几次Full GC后，进行一次碎片整理
 * -XX:ParallelCMSThreads
- * 设定CMS的线程数量
+ - 设定CMS的线程数量
 
 #### GC参数整理
 
