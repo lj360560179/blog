@@ -7,7 +7,7 @@ tag:
 - jvm
 - GC
 category: java
-date: 2017.6.14 00:34:14 
+date: 2017.6.14  
 ---
 
 ### GC 参数
@@ -39,24 +39,24 @@ date: 2017.6.14 00:34:14
  * 老年代 标记-压缩  
  * 更加关注吞吐量  
  * XX:+UseParallelGC  
-  * 使用Parallel收集器+ 老年代串行  
+  - 使用Parallel收集器 + 老年代串行  
  * XX:+UseParallelOldGC
-  * 使用Parallel收集器+ 并行老年代
+  - 使用Parallel收集器 + 并行老年代
 
 ![](http://ni484sha.com/images/gcc3.png)
 
 ```s
-1.500: [Full GC [PSYoungGen: 2682K->0K(19136K)] [ParOldGen: 28035K->30437K(43712K)] 30717K->30437K(62848K) [PSPermGen: 10943K->10928K(32768K)], 0.2902791 secs] [Times: user=1.44 sys=0.03, real=0.30 secs]
+1.500: [Full GC [PSYoungGen: 2682K->0K(19136K)] [ParOldGen: 28035K->30437K(43712K)] 30717K->30437K(62848K) [PSPermGen: 10943K->10928K(32768K)], 0.2902791 secs] [Times: user=1.44 sys=0.03, real=0.30 secs].
 ```
 
 * -XX:MaxGCPauseMills
- * 最大停顿时间，单位毫秒  
- * GC尽力保证回收时间不超过设定值
+ - 最大停顿时间，单位毫秒  
+ - GC尽力保证回收时间不超过设定值
 
 * -XX:GCTimeRatio
- * 0-100的取值范围
- * 垃圾收集时间占总时间的比
- * 默认99，即最大允许1%时间做GC
+ - 0-100的取值范围
+ - 垃圾收集时间占总时间的比
+ - 默认99，即最大允许1%时间做GC
 
 * 这两个参数是矛盾的。因为停顿时间和吞吐量不可能同时调优
 
