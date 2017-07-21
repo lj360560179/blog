@@ -32,7 +32,7 @@ typeof(undefined);//"undefined"
 ```
 使用typeof主要用来判断变量是否被定义、测试变量是否是方法。
 ### 2.confirm ###
-confirm() 方法用于显示一个带有指定消息和 OK 及取消按钮的对话框。但是不太好看。
+confirm() 方法用于显示一个带有指定消息和 OK 及取消按钮的对话框。但是不太好看.
 ```javascript
 // 弹框消息
 gwwg.h_pop_confirm = function(content,onOk){
