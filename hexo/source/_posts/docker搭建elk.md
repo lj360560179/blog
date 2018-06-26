@@ -32,13 +32,13 @@ vi sysctl.conf
 ```
 
 ### pull elk镜像
-```sh
+```sh  
 docker pull sebp/elk
 ```
 该镜像包含了elk三个部分，比较方便，也可以单独拉起每个部分的镜像分开部署
 
 ### 启动 elk
-```sh
+```sh  
 docker run -d -p 5601:5601 -p 9200:9200 -p 5044:5044  -it --name elk sebp/elk
 ```
 启动要一会,使用命令查看容器是否正常运行
