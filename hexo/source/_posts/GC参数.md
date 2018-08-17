@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title: GC参数
+title: GC相关
 tag: 
 - java
 - jvm
@@ -21,21 +21,17 @@ date: 2017.6.14
 * 效率高
 * 可能会产生较长的停顿
 * -XX:+UseSerialGC
- * 新生代、老年代使用串行回收
- * 新生代复制算法  
- * 老年代标记-压缩
+* 新生代、老年代使用串行回收
+* 新生代复制算法  
+* 老年代标记-压缩
 
 ![](http://ni484sha.com/images/gcc2.png)
 
-```s
-0.844: [GC 0.844: [DefNew: 17472K->2176K(19648K), 0.0188339 secs] 17472K->2375K(63360K), 0.0189186 secs] [Times: user=0.01 sys=0.00, real=0.02 secs]
-
-8.259: [Full GC 8.259: [Tenured: 43711K->40302K(43712K), 0.2960477 secs] 63350K->40302K(63360K), [Perm : 17836K->17836K(32768K)], 0.2961554 secs] [Times: user=0.28 sys=0.02, real=0.30 secs]
-```
 
 #### GC参数 -并行收集器
-* ParNew收集器
-  - -XX:+UseParNewGC
+
+##### ParNew收集器
+  - -XX:+UseParNewGC()
     * 新生代并行
     * 老年代串行
   - Serial收集器新生代的并行版本
@@ -47,9 +43,7 @@ date: 2017.6.14
 
 ![](http://ni484sha.com/images/gcc99.png)
 
-```s
-0.834: [GC 0.834: [ParNew: 13184K->1600K(14784K), 0.0092203 secs] 13184K->1921K(63936K), 0.0093401 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
-```
+
 
 * Parallel收集器
  * 类似ParNew  
@@ -63,10 +57,6 @@ date: 2017.6.14
 
 ![](http://ni484sha.com/images/gcc3.png)
 
-```s
-1.500: [Full GC [PSYoungGen: 2682K->0K(19136K)] [ParOldGen: 28035K->30437K(43712K)] 30717K->30437K(62848K) [PSPermGen: 10943K->10928K(32768K)], 0.2902791 secs] [Times: user=1.44 sys=0.03, real=0.30 secs].
-```
-
 * -XX:MaxGCPauseMills
  - 最大停顿时间，单位毫秒  
  - GC尽力保证回收时间不超过设定值
@@ -79,14 +69,14 @@ date: 2017.6.14
 
 ####  CMS收集器
 
-* CMS收集器
+##### CMS收集器
  - Concurrent Mark Sweep 并发标(与用户线程一起执行)记清除  
  - 标记-清除算法  
  - 与标记-压缩相比  
  - 并发阶段会降低吞吐量  
  - 老年代收集器（新生代使用ParNew）  
  - XX:+UseConcMarkSweepGC
-* CMS运行过程比较复杂，着重实现了标记的过程，可分为
+##### CMS运行过程比较复杂，着重实现了标记的过程，可分为
  - 初始标记
    * 根可以直接关联到的对象
    * 速度快
@@ -99,20 +89,7 @@ date: 2017.6.14
 
 ![](http://ni484sha.com/images/gcc4.png)
 
-```s
-1.662: [GC [1 CMS-initial-mark: 28122K(49152K)] 29959K(63936K), 0.0046877 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
-1.666: [CMS-concurrent-mark-start]
-1.699: [CMS-concurrent-mark: 0.033/0.033 secs] [Times: user=0.25 sys=0.00, real=0.03 secs] 
-1.699: [CMS-concurrent-preclean-start]
-1.700: [CMS-concurrent-preclean: 0.000/0.000 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
-1.700: [GC[YG occupancy: 1837 K (14784 K)]1.700: [Rescan (parallel) , 0.0009330 secs]1.701: [weak refs processing, 0.0000180 secs] [1 CMS-remark: 28122K(49152K)] 29959K(63936K), 0.0010248 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
-1.702: [CMS-concurrent-sweep-start]
-1.739: [CMS-concurrent-sweep: 0.035/0.037 secs] [Times: user=0.11 sys=0.02, real=0.05 secs] 
-1.739: [CMS-concurrent-reset-start]
-1.741: [CMS-concurrent-reset: 0.001/0.001 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
-```
-
-* 特点
+##### 特点
  - 尽可能降低停顿
  - 会影响系统整体吞吐量和性能
    * 比如，在用户线程运行过程中，分一半CPU去做GC，系统性能在GC阶段，反应速度就下降一半
@@ -122,10 +99,7 @@ date: 2017.6.14
    * -XX:CMSInitiatingOccupancyFraction设置触发GC的阈值
    * 如果不幸内存预留空间不够，就会引起concurrent mode failure
 
-```s
-33.348: [Full GC 33.348: [CMS33.357: [CMS-concurrent-sweep: 0.035/0.036 secs] [Times: user=0.11 sys=0.03, real=0.03 secs] 
- (concurrent mode failure): 47066K->39901K(49152K), 0.3896802 secs] 60771K->39901K(63936K), [CMS Perm : 22529K->22529K(32768K)], 0.3897989 secs] [Times: user=0.39 sys=0.00, real=0.39 secs]
-```
+
 使用串行收集器作为后备
 
 * 有关碎片
